@@ -136,13 +136,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authentication via VK and Google
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.vk.VKOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = '51493816'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = 'RoVGMNqkLMskdNtDK5z7'
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 # MIDDLEWARE = [
 #     "django.middleware.security.SecurityMiddleware",
@@ -156,23 +160,25 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = 'RoVGMNqkLMskdNtDK5z7'
 # ]
 
 SOCIAL_AUTH_PIPELINE = (
- 
-    # 'social_core.pipeline.social_auth.social_details',
-    # 'social_core.pipeline.social_auth.social_uid',
-    # 'social_core.pipeline.social_auth.auth_allowed',
-    # 'social_core.pipeline.social_auth.social_user',
-    # 'social_core.pipeline.user.get_username',
-    # 'social_core.pipeline.user.create_user',
-    # 'social_core.pipeline.social_auth.associate_user',
-    # 'social_core.pipeline.social_auth.load_extra_data',
-    # 'social_core.pipeline.user.user_details',
+
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
     'users.pipeline.get_avatar',
 )
 
 
-SOCIAL_AUTH_VK_OAUTH2_SCOPE = ["email", "photos"]
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', 'photos']
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
 
 LOGIN_REDIRECT_URL = '/memories'
+LOGOUT_REDIRECT_URL = ''
 
 # Users
-AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = 'users.CustomUser'
