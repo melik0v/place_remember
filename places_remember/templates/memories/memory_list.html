@@ -12,14 +12,16 @@
     <title>Place Remember</title>
 </head>
 <body>
-    <a href="/logout">Выйти</a>
+    <a href="{% url 'logout' %}">Выйти</a>
+    <br>
+    <a href="{% url 'memories:create' %}">Добавить воспомининие</a>
     <h1>Приветствую, {{ user.username }} {{ user.first_name }} {{ user.last_name }}</h1>
     <div>У вас пока нет воспоминаний, исправьте это скорее! :)</div>
     <img class="avatar" src="{{ user.avatar }}">
 
     {% for memory in memories %}
     <p>
-        {{ memory.name }}
+        <a href="{% url 'memories:detail' pk=memory.pk %}">{{ memory.name }}</a>
         <p>
             {% for memory_image in memory.image_set.all %}
                 <img src="{{ memory_image.image.url }}" alt="photo", width="350px">

@@ -19,9 +19,11 @@ from django.urls import path, include
 from users.views import show_login_page
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', show_login_page),
-    path('', include('social_django.urls', namespace='social')),
-    path('logout/', LogoutView.as_view(template_name='logging_page.html'), name='logout'),
-    path('memories/', include('memories.urls')),
+    path("admin/", admin.site.urls),
+    path("", show_login_page),
+    path("", include("social_django.urls", namespace="social")),
+    path(
+        "logout/", LogoutView.as_view(template_name="logging_page.html"), name="logout"
+    ),
+    path("memories/", include(("memories.urls", "memories"), namespace="memories")),
 ]
