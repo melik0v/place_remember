@@ -5,19 +5,6 @@ ymaps.ready(init);
         // https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/map-docpage/
         let center = [56.010566, 92.852571]
 
-        if (document.getElementById("id_place").value)
-                {
-                    try {
-                        center = [...document.getElementById("id_place").value.split(',')]
-                    } catch(e) {
-                        center = [56.010566, 92.852571]
-                    }
-
-                    var myPlacemark = new ymaps.Placemark(center);
-                    myCollection.add(myPlacemark)
-                    myMap.geoObjects.add(myCollection);
-                }
-
         var myMap = new ymaps.Map("map", {
 
             // Координаты центра карты.
@@ -51,6 +38,21 @@ ymaps.ready(init);
             ]
         });
         var myCollection = new ymaps.GeoObjectCollection();
+
+        if (document.getElementById("id_place").value)
+                {
+                    try {
+                        center = [...document.getElementById("id_place").value.split(',')]
+                        center.reverse()
+                    } catch(e) {
+                        center = [56.010566, 92.852571]
+                    }
+
+                    var myPlacemark = new ymaps.Placemark(center);
+                    myCollection.add(myPlacemark)
+                    myMap.geoObjects.add(myCollection);
+                }
+
 
 
 

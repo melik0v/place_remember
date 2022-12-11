@@ -7,7 +7,7 @@ from django.views.generic import (
 )
 from django.urls import reverse_lazy
 from .forms import AddMemoryForm
-from .models import Memory, Image
+from .models import Memory
 from .forms import ImageFormset
 
 # from django.urls import reverse
@@ -17,6 +17,9 @@ from django.shortcuts import redirect
 class MemoryListView(ListView):
     model = Memory
     context_object_name = "memories"
+
+    def get_queryset(self):
+        return Memory.objects.filter(user_id=self.request.user)
 
 
 class MemoryCreateView(CreateView):
@@ -43,6 +46,7 @@ class MemoryCreateView(CreateView):
 
     def form_valid(self, form, image_formset):
         self.object = form.save(commit=False)
+        self.object.user_id = self.request.user
         self.object.save()
 
         images = image_formset.save(commit=False)
@@ -62,5 +66,16 @@ class MemoryCreateView(CreateView):
 class MemoryDetailView(DetailView):
     model = Memory
     context_object_name = "memory"
-
     pk_url_kwarg = "pk"
+
+
+class MemoryDeleteView(DeleteView):
+    model = Memory
+    success_url = reverse_lazy("memories:memories")
+
+
+class MemoryUpdateView(UpdateView):
+    model = Memory
+    form_class = AddMemoryForm
+    success_url = reverse_lazy("memories:memories")
+    context_object_name = "memory"

@@ -1,20 +1,16 @@
 from django.db import models
-from django.urls import reverse
 from users.models import CustomUser
 
 
 class Memory(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, default=None)
-    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(CustomUser, blank=True, on_delete=models.CASCADE)
     place = models.CharField(max_length=255, blank=True, null=True, default=None)
     created = models.DateField(auto_now_add=True, auto_now=False)
     description = models.TextField(blank=True, null=True, default=None)
 
     def __str__(self) -> str:
         return self.name
-
-    # def get_absolute_url(self):
-    #     return reverse('memory_detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = "Memory"

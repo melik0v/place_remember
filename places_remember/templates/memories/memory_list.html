@@ -22,6 +22,7 @@
     {% for memory in memories %}
     <p>
         <a href="{% url 'memories:detail' pk=memory.pk %}">{{ memory.name }}</a>
+        <a href="{% url 'memories:delete' pk=memory.pk %}"> Удалить </a>
         <p>
             {% for memory_image in memory.image_set.all %}
                 <img src="{{ memory_image.image.url }}" alt="photo", width="350px">
