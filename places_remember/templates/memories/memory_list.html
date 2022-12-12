@@ -22,7 +22,8 @@
     {% for memory in memories %}
     <p>
         <a href="{% url 'memories:detail' pk=memory.pk %}">{{ memory.name }}</a>
-        <a href="{% url 'memories:delete' pk=memory.pk %}"> Удалить </a>
+        <a href="{% url 'memories:delete' pk=memory.pk %}">Удалить</a>
+        <a href="{% url 'memories:edit' pk=memory.pk %}">Редактировать</a>
         <p>
             {% for memory_image in memory.image_set.all %}
                 <img src="{{ memory_image.image.url }}" alt="photo", width="350px">
@@ -30,6 +31,5 @@
         </p>
     </p>
     {% endfor %}
-    <!-- <div id="map" style="width: 600px; height: 400px"></div> -->
 </body>
 </html>

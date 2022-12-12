@@ -9,20 +9,37 @@ from django.urls import reverse_lazy
 from .forms import AddMemoryForm
 from .models import Memory
 from .forms import ImageFormset
-
-# from django.urls import reverse
 from django.shortcuts import redirect
+from django.http import Http404
+
+
+class ObjectViewMixin:
+    model = None
+    allow_empty = False
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            self.object = self.get_object(
+                self.model.objects.filter(user_id=request.user)
+            )
+        else:
+            raise Http404("Page not found")
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 
 class MemoryListView(ListView):
     model = Memory
     context_object_name = "memories"
+    allow_empty = False
 
     def get_queryset(self):
-        return Memory.objects.filter(user_id=self.request.user)
+        if self.request.user.is_authenticated:
+            return Memory.objects.filter(user_id=self.request.user)
+        return Memory.objects.none()
 
 
-class MemoryCreateView(CreateView):
+class MemoryCreateView(ObjectViewMixin, CreateView):
     model = Memory
     form_class = AddMemoryForm
     success_url = reverse_lazy("memories:memories")
@@ -63,18 +80,18 @@ class MemoryCreateView(CreateView):
         )
 
 
-class MemoryDetailView(DetailView):
+class MemoryDetailView(ObjectViewMixin, DetailView):
     model = Memory
     context_object_name = "memory"
     pk_url_kwarg = "pk"
 
 
-class MemoryDeleteView(DeleteView):
+class MemoryDeleteView(ObjectViewMixin, DeleteView):
     model = Memory
     success_url = reverse_lazy("memories:memories")
 
 
-class MemoryUpdateView(UpdateView):
+class MemoryUpdateView(ObjectViewMixin, UpdateView):
     model = Memory
     form_class = AddMemoryForm
     success_url = reverse_lazy("memories:memories")

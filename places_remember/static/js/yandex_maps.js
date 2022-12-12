@@ -2,20 +2,18 @@ ymaps.ready(init);
 
     function init() {
         // Создание карты.
-        // https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/map-docpage/
-        let center = [56.010566, 92.852571]
+        let center = [...document.getElementById("id_place").value.split(',')]
 
         var myMap = new ymaps.Map("map", {
 
             // Координаты центра карты.
-            // Порядок по умолчнию: «широта, долгота».
+            // Порядок по умолчнию: «широта, долгота» изменил на longlat.
             center: center,
 
             // Уровень масштабирования. Допустимые значения:
             // от 0 (весь мир) до 19.
             zoom: 12,
             // Элементы управления
-            // https://tech.yandex.ru/maps/doc/jsapi/2.1/dg/concepts/controls/standard-docpage/
             controls: [
 
                 'zoomControl', // Ползунок масштаба
@@ -43,9 +41,8 @@ ymaps.ready(init);
                 {
                     try {
                         center = [...document.getElementById("id_place").value.split(',')]
-                        center.reverse()
                     } catch(e) {
-                        center = [56.010566, 92.852571]
+                        center = [92.852571, 56.010566]
                     }
 
                     var myPlacemark = new ymaps.Placemark(center);
@@ -61,15 +58,11 @@ ymaps.ready(init);
             myCollection.removeAll();
             // Получение координат щелчка
             var coords = e.get('coords');
-            // for (i = 0; i < coords.length; ++i) {
-            //     coords[i] = coords[i].toFixed(6);
-            // }
-            //alert(coords.join(', '));
             var myPlacemark = new ymaps.Placemark([...coords]);
             myCollection.add(myPlacemark)
             myMap.geoObjects.add(myCollection);
 
-            document.getElementById("id_place").value = coords.reverse().join(',');
+            document.getElementById("id_place").value = coords.join(',');
 
         });
 
