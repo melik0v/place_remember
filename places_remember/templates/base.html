@@ -1,4 +1,3 @@
-{% extends "base.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -14,12 +13,8 @@
 </head>
 <body>
     {% block content %}
-    <form method="post">{% csrf_token %}
-        <p>Are you sure you want to delete "{{ memory.name }}"?</p>
-        {{ form }}
-        <input type="submit" value="Confirm">
-        <a href="{% url 'memories:memories' %}">Cancel</a>
-    </form>
     {% endblock %}
+
+
 </body>
 </html>

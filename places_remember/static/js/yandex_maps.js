@@ -2,8 +2,13 @@ ymaps.ready(init);
 
     function init() {
         // Создание карты.
-        let center = [...document.getElementById("id_place").value.split(',')]
-
+        if (document.getElementById("id_place").value) {
+            center = [...document.getElementById("id_place").value.split(',')]
+        }
+        else {
+            center = [92.852571, 56.010566]
+        }
+        //let center = [92.852571, 56.010566]
         var myMap = new ymaps.Map("map", {
 
             // Координаты центра карты.
