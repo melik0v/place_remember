@@ -22,8 +22,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", show_login_page),
     path("", include("social_django.urls", namespace="social")),
-    path(
-        "logout/", LogoutView.as_view(template_name="logging_page.html"), name="logout"
-    ),
+    path("logout/", LogoutView.as_view(template_name="login_page.html"), name="logout"),
     path("memories/", include(("memories.urls", "memories"), namespace="memories")),
 ]

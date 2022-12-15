@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def show_login_page(request):
-    return render(request, 'logging_page.html')
+    if request.user.is_authenticated:
+        return redirect("memories:memories")
+    return render(request, "login_page.html")

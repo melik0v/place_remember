@@ -23,10 +23,10 @@ ymaps.ready(init);
 
                 'zoomControl', // Ползунок масштаба
                 'rulerControl', // Линейка
-                'routeButtonControl', // Панель маршрутизации
-                'trafficControl', // Пробки
-                'typeSelector', // Переключатель слоев карты
-                'fullscreenControl', // Полноэкранный режим
+                // 'routeButtonControl', // Панель маршрутизации
+                // 'trafficControl', // Пробки
+                // 'typeSelector', // Переключатель слоев карты
+                // 'fullscreenControl', // Полноэкранный режим
 
                 // Поисковая строка
                 new ymaps.control.SearchControl({
