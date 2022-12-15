@@ -22,9 +22,7 @@ class Image(models.Model):
         Memory, blank=True, null=True, default=None, on_delete=models.CASCADE
     )
     image = models.ImageField(
-        default="static/media/placeholder.png",
-        upload_to="static/media/test_user"
-        # upload_to="static/media/test_user"
+        default="static/media/placeholder.png", upload_to="static/media/test_user"
     )
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
